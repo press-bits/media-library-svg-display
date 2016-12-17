@@ -1,0 +1,14 @@
+{
+    "name": "cyberhobo/media-library-svg-display",
+    "description": "Enable display of Scalable Vector Graphics (SVG) in the WordPress media library.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dylan Kuhn",
+            "email": "dylan@cyberhobo.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    }
+}
