@@ -1,6 +1,6 @@
 <?php
 
-namespace Cyberhobo\MediaLibrary;
+namespace PressBits\MediaLibrary;
 
 use WP_Post;
 

@@ -15,11 +15,11 @@ Ah, the same good stuff as a [Composer](https://getcomposer.com) dependency!
 
 Run 
 
-	composer require cyberhobo/media-library-svg-display
+	composer require press-bits/media-library-svg-display
 
 or add 
 
-	"cyberhobo/media-library-svg-display": "^0.1.0"
+	"press-bits/media-library-svg-display": "^0.1.0"
 
 to the requirements in your `composer.json`.
 
@@ -27,7 +27,7 @@ to the requirements in your `composer.json`.
 
 In your bootstrap code, after including `vendor/autoload.php`:
 
-	Cyberhobo\MediaLibrary\ScalarVectorGraphicsDisplay::enable();
+	PressBits\MediaLibrary\ScalarVectorGraphicsDisplay::enable();
 
 ## No Uploads
 
