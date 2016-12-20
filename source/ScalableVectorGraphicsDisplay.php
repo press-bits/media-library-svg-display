@@ -2,10 +2,6 @@
 
 namespace Cyberhobo\MediaLibrary;
 
-use add_action;
-use add_filter;
-use wp_add_inline_style;
-use simplexml_load_file;
 use WP_Post;
 
 /**
@@ -20,9 +16,11 @@ class ScalableVectorGraphicsDisplay {
 	 *
 	 * @since 0.1.0
 	 */
-	public function enable() {
-		add_action( 'admin_enqueue_scripts', array( $this, 'add_administration_styles' ) );
-		add_filter( 'wp_prepare_attachment_for_js', array( $this, 'adjust_response_for_svg' ), 10, 3 );
+	public static function enable() {
+		if ( ! has_action( 'admin_enqueue_scripts', [ __CLASS__, 'add_administation_styles' ] ) ) {
+			add_action( 'admin_enqueue_scripts', [ __CLASS__, 'add_administration_styles' ] );
+			add_filter( 'wp_prepare_attachment_for_js', [ __CLASS__, 'adjust_response_for_svg' ], 10, 3 );
+		}
 	}
 
 	/**
@@ -30,9 +28,9 @@ class ScalableVectorGraphicsDisplay {
 	 *
 	 * @since 0.1.0
 	 */
-	public function add_administration_styles() {
-		$this->add_media_listing_style();
-		$this->add_featured_image_style();	
+	public static function add_administration_styles() {
+		static::add_media_listing_style();
+		static::add_featured_image_style();
 	}
 
 	/**
@@ -44,12 +42,12 @@ class ScalableVectorGraphicsDisplay {
 	 * @param array $meta
 	 * @return array
 	 */
-	public function adjust_response_for_svg( $response, $attachment, $meta ) {
+	public static function adjust_response_for_svg( $response, $attachment, $meta ) {
 		if ( 'image/svg+xml' != $response['mime'] or ! empty( $response['sizes'] ) ) {
 			return $response;
 		}
 
-		$dimensions = $this->get_dimensions( get_attached_file( $attachment->ID ) );
+		$dimensions = static::get_dimensions( get_attached_file( $attachment->ID ) );
 
 		$response['sizes'] = array(
 			'full' => array(
@@ -66,14 +64,14 @@ class ScalableVectorGraphicsDisplay {
 	/**
 	 * @since 0.1.0
 	 */
-	protected function add_media_listing_style() {
+	protected static function add_media_listing_style() {
 		wp_add_inline_style( 'wp-admin', ".media .media-icon img[src$='.svg'] { width: auto; height: auto; }" );
 	}
 
 	/**
 	 * @since 0.1.0
 	 */
-	protected function add_featured_image_style() {
+	protected static function add_featured_image_style() {
 		wp_add_inline_style( 'wp-admin', "#postimagediv .inside img[src$='.svg'] { width: 100%; height: auto; }" );
 	}
 
@@ -84,7 +82,7 @@ class ScalableVectorGraphicsDisplay {
 	 * @param string $svg_path
 	 * @return object
 	 */
-	protected function get_dimensions( $svg_path ) {
+	protected static function get_dimensions( $svg_path ) {
 		$svg = simplexml_load_file( $svg_path );
 		$attributes = $svg->attributes();
 		$width = (string) $attributes->width;
