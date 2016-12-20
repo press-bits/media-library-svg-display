@@ -1,5 +1,6 @@
 {
     "name": "press-bits/media-library-svg-display",
+	"version": "0.1.0",
     "description": "Enable display of Scalable Vector Graphics (SVG) in the WordPress media library.",
     "license": "GPL-2.0+",
     "authors": [
