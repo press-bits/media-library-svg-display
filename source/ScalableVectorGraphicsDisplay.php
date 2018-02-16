@@ -83,11 +83,11 @@ class ScalableVectorGraphicsDisplay {
 	 * @return object
 	 */
 	protected static function get_dimensions( $svg_path ) {
+		$width = $height = 0;
 		$svg = simplexml_load_file( $svg_path );
-		$attributes = $svg->attributes();
-		$width = (string) $attributes->width;
-		$height = (string) $attributes->height;
-
+		if($svg) {
+			list($width, $height) = $svg->attributes();
+		}
 		return (object) compact( 'width', 'height' );
 	}
 }
